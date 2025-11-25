@@ -3,629 +3,949 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oğuzhan KÖMCÜ - .NET Developer</title>
+    <title>Oğuzhan Kömcü | Future .NET Dev</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- FÜTÜRİSTİK CSS BAŞLANGICI --- */
+        :root {
+            --bg-dark: #050505;
+            --bg-panel: rgba(20, 20, 35, 0.6);
+            --neon-blue: #00f3ff;
+            --neon-purple: #bc13fe;
+            --text-main: #e0e6ed;
+            --text-muted: #94a3b8;
+            --border-glow: 0 0 10px rgba(0, 243, 255, 0.5);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Courier New', monospace;
-            background: #0a0e27;
-            color: #fff;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif; /* Fütüristik gövde fontu */
+            line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
         }
 
-        .matrix-bg {
+        /* Arkaplan Animasyonu için Canvas */
+        #canvas-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            opacity: 0.1;
+            z-index: -1;
+            opacity: 0.4;
         }
 
-        canvas {
-            display: block;
+        /* Scrollbar Özelleştirme */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-blue);
+            border-radius: 4px;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        header {
-            text-align: center;
-            padding: 80px 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glitch-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        h1 {
-            font-size: 5em;
-            font-weight: bold;
-            color: #00ff41;
-            text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41, 0 0 30px #00ff41;
-            animation: glow 2s ease-in-out infinite alternate;
-            letter-spacing: 5px;
-        }
-
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41, 0 0 30px #00ff41;
-            }
-            to {
-                text-shadow: 0 0 20px #00ff41, 0 0 30px #00ff41, 0 0 40px #00ff41, 0 0 50px #00ff41;
-            }
-        }
-
-        .title {
-            color: #00d9ff;
-            font-size: 1.8em;
-            margin-top: 20px;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            animation: typing 3s steps(20) infinite;
-        }
-
-        .cyber-line {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00ff41, transparent);
-            margin: 30px 0;
-            animation: scan 2s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        .contact-card {
-            background: rgba(0, 255, 65, 0.05);
-            border: 2px solid #00ff41;
-            border-radius: 15px;
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .contact-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(0, 255, 65, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: 0.5s;
-        }
-
-        .contact-card:hover::before {
-            left: 100%;
-        }
-
-        .contact-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
-            border-color: #00d9ff;
-        }
-
-        .section {
-            background: rgba(10, 14, 39, 0.8);
-            border: 2px solid #00ff41;
-            border-radius: 20px;
-            padding: 40px;
-            margin: 40px 0;
-            position: relative;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
-        }
-
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 65, 0.05) 50%, transparent 70%);
-            animation: shimmer 3s infinite;
-            pointer-events: none;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        h2 {
-            color: #00d9ff;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-            display: inline-block;
-        }
-
-        h2::after {
-            content: '_';
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .skill-hexagon {
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.2), rgba(0, 217, 255, 0.2));
-            border: 2px solid #00ff41;
-            padding: 30px 20px;
-            text-align: center;
-            font-size: 1.2em;
-            font-weight: bold;
-            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-            transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .skill-hexagon:hover {
-            transform: scale(1.2) rotate(5deg);
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.4), rgba(0, 217, 255, 0.4));
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 50px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(180deg, #00ff41, #00d9ff, #00ff41);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        .timeline-item {
-            margin-bottom: 40px;
-            position: relative;
-            padding: 25px;
-            background: rgba(0, 255, 65, 0.05);
-            border-left: 3px solid #00ff41;
-            border-radius: 10px;
-            transition: all 0.3s;
-        }
-
-        .timeline-item::before {
-            content: '▶';
-            position: absolute;
-            left: -47px;
-            top: 25px;
-            width: 15px;
-            height: 15px;
-            color: #00ff41;
-            font-size: 20px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .timeline-item:hover {
-            background: rgba(0, 255, 65, 0.1);
-            transform: translateX(10px);
-            border-left-color: #00d9ff;
-        }
-
-        .company-name {
-            color: #00ff41;
-            font-size: 1.8em;
-            font-weight: bold;
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        .position {
-            color: #00d9ff;
-            font-size: 1.3em;
-            margin: 10px 0;
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .date {
-            color: #888;
-            font-style: italic;
-            margin-bottom: 15px;
-        }
-
-        .description {
-            color: #ccc;
-            line-height: 1.8;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .project-cube {
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), rgba(0, 217, 255, 0.1));
-            border: 2px solid #00ff41;
-            border-radius: 15px;
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s;
-            transform-style: preserve-3d;
-        }
-
-        .project-cube::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #00ff41, #00d9ff, #00ff41);
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .project-cube:hover {
-            transform: translateY(-15px) rotateX(10deg);
-            box-shadow: 0 20px 40px rgba(0, 255, 65, 0.4);
-        }
-
-        .project-cube:hover::before {
-            opacity: 1;
-        }
-
-        .project-cube h3 {
-            color: #00ff41;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .project-link {
-            color: #00d9ff;
-            text-decoration: none;
-            font-size: 0.9em;
-            word-break: break-all;
-            display: inline-block;
-            margin-top: 10px;
-            transition: all 0.3s;
-        }
-
-        .project-link:hover {
-            color: #00ff41;
-            text-shadow: 0 0 10px #00ff41;
-        }
-
-        .terminal-text {
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            line-height: 1.8;
-        }
-
-        footer {
-            text-align: center;
-            padding: 50px 20px;
-            margin-top: 60px;
-            border-top: 2px solid #00ff41;
-            color: #00ff41;
-            font-size: 1.1em;
-        }
-
-        .scanner {
+        /* --- NAVBAR --- */
+        .navbar {
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
             position: fixed;
             width: 100%;
-            height: 100px;
-            background: linear-gradient(180deg, transparent, rgba(0, 255, 65, 0.1), transparent);
-            pointer-events: none;
-            animation: scanner 4s linear infinite;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .nav-links { display: flex; }
+        .nav-links li { margin-left: 30px; }
+
+        .nav-links a {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '<';
+            margin-right: 5px;
+            color: var(--neon-purple);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .nav-links a::after {
+            content: '/>';
+            margin-left: 5px;
+            color: var(--neon-purple);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover { color: var(--neon-blue); }
+        .nav-links a:hover::before, .nav-links a:hover::after { opacity: 1; }
+
+        .hamburger {
+            display: none;
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+        }
+
+        /* Yanıp sönen ızgara efekti */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .hero-text { flex: 1; padding-right: 50px; }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            color: var(--white);
+        }
+
+        .hero-text .highlight {
+            color: var(--neon-blue);
+            position: relative;
+            display: inline-block;
+        }
+        
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+        }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-dark);
+        }
+        .glitch::before {
+            left: 2px;
+            text-shadow: -1px 0 #ff00c1;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -2px;
+            text-shadow: -1px 0 #00fff9;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(18px, 9999px, 86px, 0); }
+            5% { clip: rect(40px, 9999px, 12px, 0); }
+            100% { clip: rect(4px, 9999px, 69px, 0); }
+        }
+        @keyframes glitch-anim2 {
+            0% { clip: rect(82px, 9999px, 11px, 0); }
+            5% { clip: rect(32px, 9999px, 56px, 0); }
+            100% { clip: rect(10px, 9999px, 3px, 0); }
+        }
+
+        .hero-text h2 {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+            color: var(--neon-purple);
+            margin-bottom: 20px;
+            border-left: 3px solid var(--neon-purple);
+            padding-left: 15px;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 320px;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 50%; /* Daire */
+            border: 4px solid var(--neon-blue);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
             z-index: 2;
         }
 
-        @keyframes scanner {
-            0% { top: -100px; }
-            100% { top: 100%; }
+        /* Profil arkasında dönen halka
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            border: 2px dashed var(--neon-purple);
+            animation: rotate 10s linear infinite;
+        }*/
+
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+
+        /* Cyber Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 35px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+            transition: var(--transition);
+            margin-right: 15px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .btn-primary {
+            background: var(--neon-blue);
+            color: #000;
+        }
+        .btn-primary:hover {
+            background: var(--neon-purple);
+            color: #fff;
+            box-shadow: 0 0 20px var(--neon-purple);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+        }
+        .btn-outline:hover {
+            background: rgba(0, 243, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+        }
+
+        /* --- GENEL SECTION --- */
+        .section { padding: 100px 0; }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 70px;
+            color: var(--text-main);
+            position: relative;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--neon-blue);
+            margin: 15px auto 0;
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        /* --- SKILLS (HOLOGRAPHIC CARDS) --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-card {
+            background: var(--bg-panel);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-blue);
+            box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.1);
+        }
+        .skill-card:hover::before { transform: translateX(100%); }
+
+        .skill-card i {
+            font-size: 3rem;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 5px var(--neon-blue));
+        }
+
+        .skill-card h3 { color: var(--text-main); font-size: 1.3rem; margin-bottom: 15px; }
+        .skill-card p { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--text-muted); }
+
+        /* --- PROJECTS (CYBERPUNK GRID) --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            background: #0f0f13;
+            border: 1px solid #2a2a35;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 20px rgba(188, 19, 254, 0.2);
+            transform: scale(1.02);
+        }
+
+        .project-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Resim üzerine tarama çizgisi efekti */
+        .project-img::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            filter: grayscale(40%);
+        }
+
+        .project-card:hover .project-img img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        .project-info { padding: 25px; }
+        .project-info h3 { color: var(--white); font-size: 1.2rem; margin-bottom: 10px; }
+        .project-info p { color: #a0a0a0; font-size: 0.9rem; margin-bottom: 20px; }
+        
+        /* --- TIMELINE (CIRCUIT BOARD STYLE) --- */
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 30px;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        /* Timeline Noktaları */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -39px; /* Çizgiye hizalama */
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--bg-dark);
+            border: 2px solid var(--neon-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-blue);
+            z-index: 2;
+        }
+
+        .timeline-content {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-left: 3px solid var(--neon-blue);
+            border-radius: 0 10px 10px 0;
+            transition: var(--transition);
+        }
+        
+        .timeline-content:hover {
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.05) 0%, rgba(0,0,0,0) 100%);
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .company-logo {
+            width: 50px; height: 50px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+        .company-logo img { width: 100%; height: 100%; object-fit: contain; background: #fff;}
+
+        .timeline-title h3 { font-size: 1.3rem; color: var(--text-main); }
+        .timeline-title h4 { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: var(--neon-blue); }
+        .date {
+            font-size: 0.8rem;
+            color: var(--neon-purple);
+            border: 1px solid var(--neon-purple);
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        /* --- CONTACT & FOOTER --- */
+        footer {
+            background: #020202;
+            padding: 60px 0 30px;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        .contact-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255,255,255,0.03);
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+        }
+
+        .contact-item:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+        }
+
+        .contact-item i { color: var(--neon-blue); font-size: 1.2rem; }
+
+        .social-footer a {
+            color: var(--text-muted);
+            font-size: 1.8rem;
+            margin: 0 15px;
+            transition: var(--transition);
+        }
+
+      .dateBox {
+           font-size: 0.65rem;
+            font-weight: 700; 
+            color: rgba(0, 243, 255, 0.8); 
+            border: 1px solid rgba(0, 243, 255, 0.5); 
+            background: rgba(0, 243, 255, 0.05); 
+            padding: 5px 15px; 
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2); 
+            letter-spacing: 1px;
+            font-family: 'Fira Code', monospace;
+        }
+        .social-footer a:hover { color: var(--neon-purple); text-shadow: 0 0 10px var(--neon-purple); }
+
+        .copyright { color: #555; font-size: 0.85rem; margin-top: 40px; font-family: 'Fira Code', monospace;}
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .hero-content { flex-direction: column-reverse; text-align: center; }
+            .hero-text { padding-right: 0; margin-top: 40px; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .hero-text h2 { display: inline-block; }
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 3em;
+            .nav-links {
+                position: absolute;
+                top: 80px; left: 0; width: 100%;
+                background: rgba(5,5,5,0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                clip-path: circle(0% at 100% 0);
+                transition: clip-path 0.5s ease-in-out;
             }
+            .nav-links.active { clip-path: circle(140% at 100% 0); }
+            .nav-links li { margin: 15px 0; }
+            .hamburger { display: block; }
             
-            .title {
-                font-size: 1.2em;
-            }
-
-            .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            }
-        }
-
-        .loading-bar {
-            width: 100%;
-            height: 3px;
-            background: rgba(0, 255, 65, 0.2);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 999;
-        }
-
-        .loading-progress {
-            height: 100%;
-            background: linear-gradient(90deg, #00ff41, #00d9ff);
-            width: 0%;
-            animation: loading 2s ease-in-out forwards;
-        }
-
-        @keyframes loading {
-            to { width: 100%; }
+            .timeline { padding-left: 20px; }
+            .contact-container { flex-direction: column; gap: 15px; }
         }
     </style>
 </head>
 <body>
-    <div class="loading-bar">
-        <div class="loading-progress"></div>
-    </div>
-    
-    <div class="matrix-bg">
-        <canvas id="matrix"></canvas>
-    </div>
 
-    <div class="scanner"></div>
+    <canvas id="canvas-bg"></canvas>
 
-    <div class="container">
-        <header>
-            <div class="glitch-wrapper">
-                <h1>OĞUZHAN KÖMCÜ</h1>
-            </div>
-            <div class="title">.NET DEVELOPER</div>
-            <div class="cyber-line"></div>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">OK<span style="color:var(--white)">.</span></a>
             
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <div style="font-size: 2em; margin-bottom: 10px;">📱</div>
-                    <div style="color: #00d9ff; font-weight: bold;">PHONE</div>
-                    <div style="margin-top: 5px;">0534 560 16 47</div>
-                </div>
-                <div class="contact-card">
-                    <div style="font-size: 2em; margin-bottom: 10px;">📧</div>
-                    <div style="color: #00d9ff; font-weight: bold;">EMAIL</div>
-                    <div style="margin-top: 5px;">oguzkomcu@gmail.com</div>
-                </div>
-                <div class="contact-card">
-                    <div style="font-size: 2em; margin-bottom: 10px;">💼</div>
-                    <div style="color: #00d9ff; font-weight: bold;">LINKEDIN</div>
-                    <div style="margin-top: 5px; font-size: 0.9em;">linkedin.com/in/oguzhankomcu1</div>
-                </div>
-                <div class="contact-card">
-                    <div style="font-size: 2em; margin-bottom: 10px;">📍</div>
-                    <div style="color: #00d9ff; font-weight: bold;">LOCATION</div>
-                    <div style="margin-top: 5px;">İstanbul, Türkiye</div>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#about">Hakkımda</a></li>
+                <li><a href="#experience">Deneyim</a></li>
+                <li><a href="#projects">Projeler</a></li>
+                <li><a href="#contact">İletişim</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="hero" class="hero-section">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Merhaba, Ben <br><span class="highlight glitch" data-text="Oğuzhan Kömcü">Oğuzhan Kömcü</span></h1>
+      <h2>
+    <span style="color: #00f3ff; text-shadow: 0 0 20px rgba(0, 243, 255, 0.8);">Software Specialist / .NET Developer</span>
+</h2>
+                <p>C# ve .NET teknolojileri odağında, veritabanı mimarisinden kullanıcı arayüzüne kadar yazılım yaşam döngüsünün tüm aşamalarında yetkin bir yazılım geliştiricisiyim. MsSQL optimizasyonu, yüksek trafikli sistem yönetimi ve backend mimarisi ana uzmanlık alanlarım arasındadır. Agile metodolojilerine hakim bir takım oyuncusu olarak, karşılaşılan her türlü teknik zorluğu aşabilecek esnekliğe ve sürekli öğrenme tutkusuna sahibim.</p>
+                <div class="hero-btns">
+                    <a href="#contact" class="btn btn-primary">İletişime Geç</a>
+                    <a href="https://github.com/oguzhanKomcu" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://linkedin.com/in/oguzhankomcu1" target="_blank" class="btn btn-outline"><i class="fab fa-linkedin"></i> LinkedIn</a>
                 </div>
             </div>
-        </header>
-
-        <div class="section">
-            <h2>SYSTEM.INFO</h2>
-            <div class="terminal-text">
-                <p style="margin-bottom: 15px;">> Veritas Academy bünyesinde .NET Developer olarak web tabanlı yazılım uygulamalarının geliştirilmesi ve bakım süreçlerinde çalışıyorum. Kullanıcı ihtiyaçlarına uygun çözümler üreterek performans iyileştirmeleri yapıyor ve yeni özellikler geliştiriyorum.</p>
-                <p>> BilgeAdam Technologies ve Dreams&Bytes gibi teknolojik firmalarda edindiğim deneyimlerle, back-end geliştirme ve içerik yönetim sistemleri üzerinde uzmanlaştım. C#, .NET gibi teknolojilerde yetkinlik sahibiyim ve bu alanlarda sürekli kendimi geliştirme hedefiyle çalışıyorum.</p>
+            <div class="hero-image">
+                <img src="img/oguzhanpp.jpg" alt="Oğuzhan Kömcü">
             </div>
         </div>
+    </section>
 
-        <div class="section">
-            <h2>SKILLS.EXE</h2>
+<section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">Teknik Yetkinlikler</h2>
             <div class="skills-grid">
-                <div class="skill-hexagon">C#</div>
-                <div class="skill-hexagon">.NET</div>
-                <div class="skill-hexagon">XML</div>
-                <div class="skill-hexagon">ASP.NET</div>
-                <div class="skill-hexagon">BACK-END</div>
-                <div class="skill-hexagon">FRONT-END</div>
-                <div class="skill-hexagon">CMS</div>
-                <div class="skill-hexagon">SQL</div>
+                
+                <div class="skill-card">
+                    <i class="fas fa-terminal"></i>
+                    <h3>Backend Core</h3>
+                    <p>C#, ASP.NET Core, Web API,EF Core, Ado.Net,Win Form, Web Form </p>
+                </div>
+
+                <div class="skill-card">
+                    <i class="fas fa-database"></i>
+                    <h3>Data Structures</h3>
+                    <p>MS SQL Server, MongoDB, Redis, Elasticsearch</p>
+                </div>
+
+                <div class="skill-card">
+                    <i class="fab fa-react"></i>
+                    <h3>Frontend Interface</h3>
+                    <p>HTML5, CSS3, JavaScript, Bootstrap</p>
+                </div>
+
+                <div class="skill-card">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>DevOps & Cloud</h3>
+                    <p>Docker, Azure, RabbitMQ, CI/CD Pipelines</p>
+                </div>
+
+                <div class="skill-card">
+                    <i class="fas fa-brain" style="color: #bc13fe;"></i> <h3>AI & Automation</h3>
+                    <p>ChatGPT, Gemini, Claude, DeepSeek, Nano Banana, n8n</p>
+                </div>
+
             </div>
         </div>
-
-        <div class="section">
-            <h2>EXPERIENCE.LOG</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="company-name">VERITAS ACADEMY</div>
-                    <div class="position">.NET Developer</div>
-                    <div class="date">[ Ocak 2025 - Günümüz ]</div>
-                    <div class="description">
-                        Kurum öğrencileri ve danışmanlar tarafından aktif olarak kullanılan web tabanlı yazılım uygulamalarının analiz, geliştirme ve bakım süreçlerinde görev alıyorum. Kullanıcı ihtiyaçlarını göz önünde bulundurarak mevcut sistemlerin performansını artırıyor, yeni özellikler geliştiriyor ve kullanıcı deneyimini iyileştirmeye yönelik çözümler sunuyorum.
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="company-name">BILGEADAM TECHNOLOGIES</div>
-                    <div class="position">.NET Developer</div>
-                    <div class="date">[ Ekim 2023 - Haziran 2024 ]</div>
-                    <div class="description">
-                        Kurumsal firmaların insan sermayesi yönetim sistemi olarak kullanılan 'HR Thema HCM' projesinin geliştirme ekibinde .Net Developer olarak görev aldım.
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="company-name">DREAMS&BYTES</div>
-                    <div class="position">Software Developer</div>
-                    <div class="date">[ Ocak 2023 - Eylül 2023 ]</div>
-                    <div class="description">
-                        Çeşitli projelerde hem web hem de içerik yönetim sistemi (CMS) tarafında genellikle back-end ve front-end geliştirmeleri gerçekleştirmek üzere çalışmalarda bulundum. Veritabanı geliştirmeleri, test, deployment işlemlerini de bizzat yürüttüm.
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="company-name">ÇUHADAROĞLU METAL A.Ş.</div>
-                    <div class="position">Software Developer</div>
-                    <div class="date">[ Haziran 2022 - Aralık 2022 ]</div>
-                    <div class="description">
-                        Çuhadaroğlu Holding'in ARGE bölümünde, geliştirilmekte olan yazılım projelerinin back-end tarafındaki yazılım geliştirme süreçlerine katılarak, bu alandaki ihtiyaçlarına destek sağladım.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>PROJECTS.DB</h2>
+    </section>
+<section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">Projeler</h2>
             <div class="projects-grid">
-                <div class="project-cube">
-                    <h3>AXESS</h3>
-                    <a href="https://www.axess.com.tr" target="_blank" class="project-link">→ www.axess.com.tr</a>
+               
+                <div class="project-card">
+                    <a href="https://odeme.tivibu.com.tr/">
+                    <div class="project-img">
+                        <img src="img/tivibugo.jpg" alt="TivibuGo Ödeme">
+                    </div>
+                    <div class="project-info">
+                        <h3>TivibuGo Ödeme Sistemleri</h3>
+                        <p>Ödeme altyapısının yüksek trafik altında stabil çalışması için backend optimizasyonları ve geliştirmeleri.</p>
+                    </div>
+                    </a>
                 </div>
-                <div class="project-cube">
-                    <h3>TIVIBU ÖDEME</h3>
-                    <a href="https://www.odeme.tivibu.com.tr" target="_blank" class="project-link">→ www.odeme.tivibu.com.tr</a>
+                <div class="project-card">
+                    <a href="https://www.turktelekomguvenlik.com/">
+                    <div class="project-img">
+                        <img src="img/turktelekomguvenlik.jpg" alt="Türk Telekom Güvenlik">
+                    </div>
+                    <div class="project-info">
+                        <h3>Türk Telekom Güvenlik</h3>
+                        <p>Türk Telekom Güvenlik, müşterileri için antivirüs programlarını sunduğu bir web sitedir./p>
+                    </div>
+                    </a>
                 </div>
-                <div class="project-cube">
-                    <h3>TÜRK TELEKOM GÜVENLİK</h3>
-                    <a href="https://www.turktelekomguvenlik.com" target="_blank" class="project-link">→ www.turktelekomguvenlik.com</a>
+                <div class="project-card">
+                    <a href="https://www.axess.com.tr/">
+                    <div class="project-img">
+                        <img src="img/axess.jpg" alt="Akbank Axess">
+                    </div>
+                    <div class="project-info">
+                        <h3>Akbank Axess</h3>
+                        <p>Akbank'ın Axess kredi kartı hakkında bilgilendirmelerin, kampayalarının sunulduğu, başvurularının yapıldığı kapsamlı bir web sitedir./p>
+                    </div>
+                    </a>
                 </div>
-                <div class="project-cube">
-                    <h3>OSMANLI MENKUL</h3>
-                    <a href="https://www.osmanlimenkul.com.tr" target="_blank" class="project-link">→ www.osmanlimenkul.com.tr</a>
+                <div class="project-card">
+                    <a href="https://www.osmanlimenkul.com.tr/">
+                    <div class="project-img">
+                        <img src="img/osmanlıyatırım.jpg" alt="Osmanlı Menkul">
+                    </div>
+                    <div class="project-info">
+                        <h3>Osmanlı Menkul</h3>
+                        <p>Osmanlı Menkul yatırım firmasının hizmtlerinin sunulduğu bir web sitesidir./p>
+                    </div>
+                    </a>
                 </div>
-                <div class="project-cube">
-                    <h3>OSMANLI PORTFÖY</h3>
-                    <a href="https://www.osmanliportfoy.com.tr" target="_blank" class="project-link">→ www.osmanliportfoy.com.tr</a>
+                <div class="project-card">
+                    <a href="https://www.osmanliportfoy.com.tr/">
+                    <div class="project-img">
+                        <img src="img/osmanliportfoy.jpg" alt="Osmanlı Portföy">
+                    </div>
+                    <div class="project-info">
+                        <h3>Osmanlı Portföy</h3>
+                        <p>Osmanlı Portföy yatırım firmasının yatırım fonları hakkında bilgilerin sunulduğu, işlemlerin yapıldığı bir web sitesidir./p>
+                    </div>
+                    </a>
                 </div>
+
+                <div class="project-card">
+                    <a href="https://www.hrthema.com/">
+                    <div class="project-img">
+                        <img src="img/hrthema.jpg" alt="HR Thema Project">
+                    </div>
+                    <div class="project-info">
+                        <h3>HR Thema HCM</h3>
+                        <p>Kurumsal firmalar için kapsamlı insan kaynakları yönetim sistemi.</p>
+                    </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://verityprep.com/">
+                    <div class="project-img">
+                        <img src="img/verityprep.jpg" alt="Verityprep">
+                    </div>
+                    <div class="project-info">
+                        <h3>Verityprep</h3>
+                        <p>Kurumun kurs tanıtımlarının, kampanyalarının bulunduğu, öğrencilerin sınav çözüm sistemlerinin olduğu platformdur.</p>
+                    </div>
+                    </a>
+                </div>
+                <div class="project-card">
+                    <a href="https://verityprep.com/">
+                    <div class="project-img">
+                        <img src="img/veritasedu.jpg" alt="Veritasedu">
+                    </div>
+                    <div class="project-info">
+                        <h3>Veritasedu</h3>
+                        <p>Kurumun kurs tanıtımlarının, kampanyalarının, sınav bilgilendirmelerinin bulunudğu web sitesidir.</p>
+                    </div>
+                    </a>
+                </div>
+
             </div>
         </div>
-
-        <div class="section">
-            <h2>EDUCATION.SYS</h2>
+    </section>
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 class="section-title">İş Deneyimi</h2>
             <div class="timeline">
+                
                 <div class="timeline-item">
-                    <div class="company-name">BALIKESIR ÜNİVERSİTESİ</div>
-                    <div class="date">[ Eylül 2014 - Kasım 2016 ]</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div class="company-logo"><img src="img/veritasLogo.jpg" alt="Veritas"></div>
+                            <div class="timeline-title">
+                                <h3>Veritas Academy</h3>
+                                <h4>Software Specialist / .NET Developer</h4>
+                            </div>
+                        </div>
+                        <span class="dateBox">01.2025 - 11.2025</span>
+                        <p style="margin-top:10px; color:#aaa;">Web tabanlı eğitim yönetim yazılımları geliştirme, bakım ve AI (Yapay Zeka) modelleri entegrasyonu.</p>
+                    </div>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="company-name">ANADOLU ÜNİVERSİTESİ</div>
-                    <div class="position">Ön Lisans - Bilgisayar Programlama</div>
-                    <div class="date">[ Ekim 2023 ]</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div class="company-logo"><img src="img/bilgeadam.jpg" alt="BilgeAdam"></div>
+                            <div class="timeline-title">
+                                <h3>BilgeAdam Technology</h3>
+                                <h4>Software Specialist / .NET Developer</h4>
+                            </div>
+                        </div>
+                        <span class="dateBox">10.2023 - 06.2024</span>
+                        <p style="margin-top:10px; color:#aaa;">HR Thema HCM projesi. Backend, frontend ve veritabanı (Redis, Docker, Azure) geliştirme süreçleri.</p>
+                    </div>
                 </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                         <div class="timeline-header">
+                            <div class="company-logo"><img src="img/dblogo.jpg" alt="DreamsBytes"></div>
+                            <div class="timeline-title">
+                                <h3>Dreams&Bytes</h3>
+                                <h4>Software Specialist / .NET Developer</h4>
+                            </div>
+                        </div>
+                        <span class="dateBox">01.2023 - 09.2023</span>
+                        <p style="margin-top:10px; color:#aaa;">TivibuGo, Türk Telekom, Akbank Axess,Osmanlı Menkul vs. projelerinin frontend ve backend yazılım geliştirmelerinin sağlanması..</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                         <div class="timeline-header">
+                            <div class="company-logo"><img src="img/cuhadaroglu_metal_logo.jpg" alt="Çuhadaroğlu"></div>
+                            <div class="timeline-title">
+                                <h3>Çuhadaroğlu Holding</h3>
+                                <h4>Software Specialist / .NET Developer</h4>
+                            </div>
+                        </div>
+                        <span class="dateBox">06.2022 - 12.2022</span>
+                        <p style="margin-top:10px; color:#aaa;">Ar-Ge departmanı ve şirket içi yazılım projelerinin frontend ve backend yazılım geliştirmelerinin yürütülmesi.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </section>
 
-        <footer>
-            <p>[ © 2025 OĞUZHAN KÖMCÜ - ALL SYSTEMS OPERATIONAL ]</p>
-            <p style="margin-top: 10px; color: #00d9ff;">[ CONNECTION SECURE - END OF TRANSMISSION ]</p>
-        </footer>
-    </div>
+    <footer id="contact">
+        <div class="container">
+            <h2>Bağlantı Kur</h2>
+            <div class="contact-container">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:oguzkomcu@gmail.com">oguzkomcu@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>0534 560 16 47</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Küçükçekmece, İstanbul</span>
+                </div>
+            </div>
+
+            <div class="social-footer">
+                <a href="https://linkedin.com/in/oguzhankomcu1" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/oguzhanKomcu" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+            
+            <p class="copyright">System.Status: Online | &copy; 2025 Oğuzhan Kömcü</p>
+        </div>
+    </footer>
 
     <script>
-        // Matrix rain effect
-        const canvas = document.getElementById('matrix');
+        // --- MOBİL MENÜ ---
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Link tıklanınca menü kapa
+        document.querySelectorAll('.nav-links a').forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.querySelector('i').classList.remove('fa-times');
+                hamburger.querySelector('i').classList.add('fa-bars');
+            });
+        });
+
+        // --- CANVAS PARTICLE ANİMASYONU ---
+        const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
 
+        let particlesArray;
+
+        // Canvas Boyutlandırma
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
-        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(10, 14, 39, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#00ff41';
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-        }
-
-        setInterval(drawMatrix, 50);
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            init();
         });
 
-        // Smooth scroll reveal
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+        // Particle Sınıfı
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.1; // Boyut
+                this.speedX = (Math.random() * 1.5 - 0.75); // X Hızı
+                this.speedY = (Math.random() * 1.5 - 0.75); // Y Hızı
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Kenarlardan sekme
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+            draw() {
+                ctx.fillStyle = '#00f3ff'; // Neon Mavi
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+
+                // Parçacıkları birbirine bağlayan çizgiler
+                for (let j = i; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 243, 255, ${1 - distance/100})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
                 }
-            });
-        }, { threshold: 0.1 });
+            }
+            requestAnimationFrame(animate);
+        }
 
-        document.querySelectorAll('.section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-            section.style.transition = 'all 0.6s ease';
-            observer.observe(section);
-        });
-
-        // Particle effect on skill hover
-        document.querySelectorAll('.skill-hexagon').forEach(skill => {
-            skill.addEventListener('mouseenter', function() {
-                this.style.animation = 'none';
-                setTimeout(() => {
-                    this.style.animation = '';
-                }, 10);
-            });
-        });
+        init();
+        animate();
     </script>
 </body>
 </html>
