@@ -14,7 +14,6 @@
             --bg-dark: #050505;
             --bg-panel: rgba(20, 20, 35, 0.6);
             --neon-blue: #00f3ff;
-            --neon-purple: #bc13fe;
             --text-main: #e0e6ed;
             --text-muted: #94a3b8;
             --border-glow: 0 0 10px rgba(0, 243, 255, 0.5);
@@ -116,14 +115,14 @@
         .nav-links a::before {
             content: '<';
             margin-right: 5px;
-            color: var(--neon-purple);
+            color: var(--neon-blue);
             opacity: 0;
             transition: var(--transition);
         }
         .nav-links a::after {
             content: '/>';
             margin-left: 5px;
-            color: var(--neon-purple);
+            color: var(--neon-blue);
             opacity: 0;
             transition: var(--transition);
         }
@@ -218,9 +217,9 @@
         .hero-text h2 {
             font-family: 'Fira Code', monospace;
             font-size: 1.2rem;
-            color: var(--neon-purple);
+            color: var(--neon-blue);
             margin-bottom: 20px;
-            border-left: 3px solid var(--neon-purple);
+            border-left: 3px solid var(--neon-blue);
             padding-left: 15px;
         }
 
@@ -255,7 +254,7 @@
             width: 360px;
             height: 360px;
             border-radius: 50%;
-            border: 2px dashed var(--neon-purple);
+            border: 2px dashed var(--neon-blue);
             animation: rotate 10s linear infinite;
         }*/
 
@@ -282,9 +281,9 @@
             color: #000;
         }
         .btn-primary:hover {
-            background: var(--neon-purple);
+            background: var(--neon-blue);
             color: #fff;
-            box-shadow: 0 0 20px var(--neon-purple);
+            box-shadow: 0 0 20px var(--neon-blue);
         }
 
         .btn-outline {
@@ -379,7 +378,7 @@
         }
 
         .project-card:hover {
-            border-color: var(--neon-purple);
+            border-color: var(--neon-blue);
             box-shadow: 0 0 20px rgba(188, 19, 254, 0.2);
             transform: scale(1.02);
         }
@@ -480,8 +479,8 @@
         .timeline-title h4 { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: var(--neon-blue); }
         .date {
             font-size: 0.8rem;
-            color: var(--neon-purple);
-            border: 1px solid var(--neon-purple);
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
             padding: 2px 8px;
             border-radius: 4px;
             display: inline-block;
@@ -544,7 +543,7 @@
             letter-spacing: 1px;
             font-family: 'Fira Code', monospace;
         }
-        .social-footer a:hover { color: var(--neon-purple); text-shadow: 0 0 10px var(--neon-purple); }
+        .social-footer a:hover { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
 
         .copyright { color: #555; font-size: 0.85rem; margin-top: 40px; font-family: 'Fira Code', monospace;}
 
@@ -631,6 +630,7 @@
 
             <ul class="nav-links" id="nav-links">
                 <li><a href="#about">Hakkımda</a></li>
+                <li><a href="#skills">Teknik Yetkinlikler</a></li>
                 <li><a href="#experience">Deneyim</a></li>
                 <li><a href="#projects">Projeler</a></li>
                 <li><a href="#contact">İletişim</a></li>
@@ -638,7 +638,7 @@
         </div>
     </nav>
 
-    <section id="hero" class="hero-section">
+    <section id="about" class="hero-section">
         <div class="container hero-content">
             <div class="hero-text">
                 <h1>Merhaba, Ben <br><span class="highlight glitch" data-text="Oğuzhan Kömcü">Oğuzhan Kömcü</span></h1>
@@ -662,7 +662,7 @@
         </div>
     </section>
 
-<section id="about" class="section">
+<section id="skills" class="section">
         <div class="container">
             <h2 class="section-title">Teknik Yetkinlikler</h2>
             <div class="skills-grid">
