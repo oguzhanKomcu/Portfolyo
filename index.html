@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oğuzhan Kömcü | .NET Dev</title>
     <link rel="icon" href="img/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
-    
-    <style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;700&display=swap"
+        rel="stylesheet">
 
+    <style>
         :root {
             --bg-dark: #050505;
             --bg-panel: rgba(20, 20, 35, 0.6);
@@ -30,7 +32,8 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            font-family: 'Rajdhani', sans-serif; /* Fütüristik gövde fontu */
+            font-family: 'Rajdhani', sans-serif;
+            /* Fütüristik gövde fontu */
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -50,22 +53,34 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
+
         ::-webkit-scrollbar-track {
             background: #0a0a0a;
         }
+
         ::-webkit-scrollbar-thumb {
             background: var(--neon-blue);
             border-radius: 4px;
         }
 
-        h1, h2, h3, h4 {
+        h1,
+        h2,
+        h3,
+        h4 {
             font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        a { text-decoration: none; color: inherit; transition: var(--transition); }
-        ul { list-style: none; }
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
 
         .container {
             max-width: 1200px;
@@ -102,8 +117,13 @@
             font-family: 'Orbitron', sans-serif;
         }
 
-        .nav-links { display: flex; }
-        .nav-links li { margin-left: 30px; }
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
 
         .nav-links a {
             font-family: 'Fira Code', monospace;
@@ -119,6 +139,7 @@
             opacity: 0;
             transition: var(--transition);
         }
+
         .nav-links a::after {
             content: '/>';
             margin-left: 5px;
@@ -127,8 +148,14 @@
             transition: var(--transition);
         }
 
-        .nav-links a:hover { color: var(--neon-blue); }
-        .nav-links a:hover::before, .nav-links a:hover::after { opacity: 1; }
+        .nav-links a:hover {
+            color: var(--neon-blue);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a:hover::after {
+            opacity: 1;
+        }
 
         .hamburger {
             display: none;
@@ -150,8 +177,11 @@
         .hero-section::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
                 linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
@@ -165,7 +195,10 @@
             width: 100%;
         }
 
-        .hero-text { flex: 1; padding-right: 50px; }
+        .hero-text {
+            flex: 1;
+            padding-right: 50px;
+        }
 
         .hero-text h1 {
             font-size: 3.5rem;
@@ -179,23 +212,30 @@
             position: relative;
             display: inline-block;
         }
-        
+
         /* Glitch Effect */
         .glitch {
             position: relative;
         }
-        .glitch::before, .glitch::after {
+
+        .glitch::before,
+        .glitch::after {
             content: attr(data-text);
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: var(--bg-dark);
         }
+
         .glitch::before {
             left: 2px;
             text-shadow: -1px 0 #ff00c1;
             clip: rect(44px, 450px, 56px, 0);
             animation: glitch-anim 5s infinite linear alternate-reverse;
         }
+
         .glitch::after {
             left: -2px;
             text-shadow: -1px 0 #00fff9;
@@ -204,14 +244,31 @@
         }
 
         @keyframes glitch-anim {
-            0% { clip: rect(18px, 9999px, 86px, 0); }
-            5% { clip: rect(40px, 9999px, 12px, 0); }
-            100% { clip: rect(4px, 9999px, 69px, 0); }
+            0% {
+                clip: rect(18px, 9999px, 86px, 0);
+            }
+
+            5% {
+                clip: rect(40px, 9999px, 12px, 0);
+            }
+
+            100% {
+                clip: rect(4px, 9999px, 69px, 0);
+            }
         }
+
         @keyframes glitch-anim2 {
-            0% { clip: rect(82px, 9999px, 11px, 0); }
-            5% { clip: rect(32px, 9999px, 56px, 0); }
-            100% { clip: rect(10px, 9999px, 3px, 0); }
+            0% {
+                clip: rect(82px, 9999px, 11px, 0);
+            }
+
+            5% {
+                clip: rect(32px, 9999px, 56px, 0);
+            }
+
+            100% {
+                clip: rect(10px, 9999px, 3px, 0);
+            }
         }
 
         .hero-text h2 {
@@ -241,7 +298,8 @@
             width: 320px;
             height: 320px;
             object-fit: cover;
-            border-radius: 50%; /* Daire */
+            border-radius: 50%;
+            /* Daire */
             border: 4px solid var(--neon-blue);
             box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
             z-index: 2;
@@ -258,7 +316,11 @@
             animation: rotate 10s linear infinite;
         }*/
 
-        @keyframes rotate { 100% { transform: rotate(360deg); } }
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
         /* Cyber Buttons */
         .btn {
@@ -280,6 +342,7 @@
             background: var(--neon-blue);
             color: #000;
         }
+
         .btn-primary:hover {
             background: var(--neon-blue);
             color: #fff;
@@ -291,21 +354,26 @@
             color: var(--neon-blue);
             border: 1px solid var(--neon-blue);
         }
+
         .btn-outline:hover {
             background: rgba(0, 243, 255, 0.1);
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
         }
 
         /* --- GENEL SECTION --- */
-        .section { padding: 100px 0; }
+        .section {
+            padding: 100px 0;
+        }
+
         .section-title {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 70px;
             color: var(--text-main);
             position: relative;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
+
         .section-title::after {
             content: '';
             display: block;
@@ -326,7 +394,7 @@
         .skill-card {
             background: var(--bg-panel);
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 40px 20px;
             text-align: center;
             border-radius: 5px;
@@ -338,7 +406,10 @@
         .skill-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 3px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
             background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
             transform: translateX(-100%);
             transition: 0.5s;
@@ -349,7 +420,10 @@
             border-color: var(--neon-blue);
             box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.1);
         }
-        .skill-card:hover::before { transform: translateX(100%); }
+
+        .skill-card:hover::before {
+            transform: translateX(100%);
+        }
 
         .skill-card i {
             font-size: 3rem;
@@ -358,8 +432,17 @@
             filter: drop-shadow(0 0 5px var(--neon-blue));
         }
 
-        .skill-card h3 { color: var(--text-main); font-size: 1.3rem; margin-bottom: 15px; }
-        .skill-card p { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--text-muted); }
+        .skill-card h3 {
+            color: var(--text-main);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .skill-card p {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
 
         /* --- PROJECTS (CYBERPUNK GRID) --- */
         .projects-grid {
@@ -388,12 +471,15 @@
             overflow: hidden;
             position: relative;
         }
-        
+
         /* Resim üzerine tarama çizgisi efekti */
         .project-img::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
             background-size: 100% 2px, 3px 100%;
             pointer-events: none;
@@ -412,10 +498,22 @@
             filter: grayscale(0%);
         }
 
-        .project-info { padding: 25px; }
-        .project-info h3 { color: var(--white); font-size: 1.2rem; margin-bottom: 10px; }
-        .project-info p { color: #a0a0a0; font-size: 0.9rem; margin-bottom: 20px; }
-        
+        .project-info {
+            padding: 25px;
+        }
+
+        .project-info h3 {
+            color: var(--white);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .project-info p {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
         /* --- TIMELINE (CIRCUIT BOARD STYLE) --- */
         .timeline {
             max-width: 800px;
@@ -435,7 +533,8 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -39px; /* Çizgiye hizalama */
+            left: -39px;
+            /* Çizgiye hizalama */
             top: 0;
             width: 16px;
             height: 16px;
@@ -447,16 +546,16 @@
         }
 
         .timeline-content {
-            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
             padding: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-left: 3px solid var(--neon-blue);
             border-radius: 0 10px 10px 0;
             transition: var(--transition);
         }
-        
+
         .timeline-content:hover {
-            background: linear-gradient(135deg, rgba(0, 243, 255, 0.05) 0%, rgba(0,0,0,0) 100%);
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
         }
 
         .timeline-header {
@@ -468,15 +567,31 @@
         }
 
         .company-logo {
-            width: 50px; height: 50px;
+            width: 50px;
+            height: 50px;
             border-radius: 10px;
             overflow: hidden;
             border: 1px solid #444;
         }
-        .company-logo img { width: 100%; height: 100%; object-fit: contain; background: #fff;}
 
-        .timeline-title h3 { font-size: 1.3rem; color: var(--text-main); }
-        .timeline-title h4 { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: var(--neon-blue); }
+        .company-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #fff;
+        }
+
+        .timeline-title h3 {
+            font-size: 1.3rem;
+            color: var(--text-main);
+        }
+
+        .timeline-title h4 {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: var(--neon-blue);
+        }
+
         .date {
             font-size: 0.8rem;
             color: var(--neon-blue);
@@ -507,10 +622,10 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             padding: 15px 25px;
             border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: var(--transition);
         }
 
@@ -519,7 +634,10 @@
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
         }
 
-        .contact-item i { color: var(--neon-blue); font-size: 1.2rem; }
+        .contact-item i {
+            color: var(--neon-blue);
+            font-size: 1.2rem;
+        }
 
         .social-footer a {
             color: var(--text-muted);
@@ -528,94 +646,134 @@
             transition: var(--transition);
         }
 
-      .dateBox {
-           font-size: 0.65rem;
-            font-weight: 700; 
-            color: rgba(0, 243, 255, 0.8); 
-            border: 1px solid rgba(0, 243, 255, 0.5); 
-            background: rgba(0, 243, 255, 0.05); 
-            padding: 5px 15px; 
+        .dateBox {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: rgba(0, 243, 255, 0.8);
+            border: 1px solid rgba(0, 243, 255, 0.5);
+            background: rgba(0, 243, 255, 0.05);
+            padding: 5px 15px;
             border-radius: 4px;
             display: inline-block;
             margin-top: 10px;
             margin-bottom: 5px;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2); 
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
             letter-spacing: 1px;
             font-family: 'Fira Code', monospace;
         }
-        .social-footer a:hover { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
 
-        .copyright { color: #555; font-size: 0.85rem; margin-top: 40px; font-family: 'Fira Code', monospace;}
+        .social-footer a:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .copyright {
+            color: #555;
+            font-size: 0.85rem;
+            margin-top: 40px;
+            font-family: 'Fira Code', monospace;
+        }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 992px) {
-            .hero-content { flex-direction: column-reverse; text-align: center; }
-            .hero-text { padding-right: 0; margin-top: 40px; }
-            .hero-text h1 { font-size: 2.5rem; }
-            .hero-text h2 { display: inline-block; }
+            .hero-content {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+
+            .hero-text {
+                padding-right: 0;
+                margin-top: 40px;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text h2 {
+                display: inline-block;
+            }
         }
 
         @media (max-width: 768px) {
             .nav-links {
                 position: absolute;
-                top: 80px; left: 0; width: 100%;
-                background: rgba(5,5,5,0.95);
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(5, 5, 5, 0.95);
                 flex-direction: column;
                 align-items: center;
                 padding: 20px 0;
                 clip-path: circle(0% at 100% 0);
                 transition: clip-path 0.5s ease-in-out;
             }
-            .nav-links.active { clip-path: circle(140% at 100% 0); }
-            .nav-links li { margin: 15px 0; }
-            .hamburger { display: block; }
-            
-            .timeline { padding-left: 20px; }
-            .contact-container { flex-direction: column; gap: 15px; }
+
+            .nav-links.active {
+                clip-path: circle(140% at 100% 0);
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .timeline {
+                padding-left: 20px;
+            }
+
+            .contact-container {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
-@media (max-width: 991px) {
-    .hero-section {
-        padding-top: 150px !important;
-        padding-bottom: 50px !important;
-        height: auto !important;
-        min-height: auto !important;
-        display: block !important;
-    }
 
-    .hero-content {
-        display: flex !important;
-        flex-direction: column-reverse !important;
-        justify-content: flex-start !important;
-        align-items: center !important;
-        padding-top: 0 !important;
-    }
+        @media (max-width: 991px) {
+            .hero-section {
+                padding-top: 150px !important;
+                padding-bottom: 50px !important;
+                height: auto !important;
+                min-height: auto !important;
+                display: block !important;
+            }
 
-    .hero-image {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-bottom: 30px;
-        margin-top: 10px;
-    }
+            .hero-content {
+                display: flex !important;
+                flex-direction: column-reverse !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+                padding-top: 0 !important;
+            }
 
-    .hero-image img {
-        max-width: 200px;
-        height: auto;
-        border-radius: 50%;
-    }
+            .hero-image {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin-bottom: 30px;
+                margin-top: 10px;
+            }
 
-    .hero-text {
-        width: 100%;
-        text-align: center;
-    }
+            .hero-image img {
+                max-width: 200px;
+                height: auto;
+                border-radius: 50%;
+            }
 
-    .hero-btns {
-        justify-content: center;
-    }
-}
-}
+            .hero-text {
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero-btns {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <canvas id="canvas-bg"></canvas>
@@ -623,7 +781,7 @@
     <nav class="navbar">
         <div class="container">
             <a href="#" class="logo">OK<span style="color:var(--white)">.</span></a>
-            
+
             <div class="hamburger" id="hamburger">
                 <i class="fas fa-bars"></i>
             </div>
@@ -633,6 +791,7 @@
                 <li><a href="#skills">Teknik Yetkinlikler</a></li>
                 <li><a href="#experience">Deneyim</a></li>
                 <li><a href="#projects">Projeler</a></li>
+                <li><a href="#personal-projects">Kişisel Projeler</a></li>
                 <li><a href="#contact">İletişim</a></li>
             </ul>
         </div>
@@ -642,18 +801,23 @@
         <div class="container hero-content">
             <div class="hero-text">
                 <h1>Merhaba, Ben <br><span class="highlight glitch" data-text="Oğuzhan Kömcü">Oğuzhan Kömcü</span></h1>
-      <h2>
-    <span style="color: #00f3ff; text-shadow: 0 0 20px rgba(0, 243, 255, 0.8);">Software Specialist / .NET Developer</span>
-</h2>
-                <p> C# ve .NET teknolojileri odağında, veritabanı mimarisinden kullanıcı arayüzüne kadar 
+                <h2>
+                    <span style="color: #00f3ff; text-shadow: 0 0 20px rgba(0, 243, 255, 0.8);">Software Specialist /
+                        .NET Developer</span>
+                </h2>
+                <p> C# ve .NET teknolojileri odağında, veritabanı mimarisinden kullanıcı arayüzüne kadar
                     yazılım geliştirme yaşam döngüsünün tüm aşamalarında deneyimli bir yazılım geliştiricisiyim.
-                    MsSQL optimizasyonu, yüksek trafikli sistemlerin yönetimi ile backend ve frontend geliştirme ana uzmanlık alanlarımı oluşturuyor.
-                    Agile metodolojilerine hakim, çözüm odaklı bir takım oyuncusu olarak; karşılaşılan teknik zorluklara hızlı adapte olabilen, 
+                    MsSQL optimizasyonu, yüksek trafikli sistemlerin yönetimi ile backend ve frontend geliştirme ana
+                    uzmanlık alanlarımı oluşturuyor.
+                    Agile metodolojilerine hakim, çözüm odaklı bir takım oyuncusu olarak; karşılaşılan teknik zorluklara
+                    hızlı adapte olabilen,
                     esnek ve sürekli öğrenme motivasyonuna sahip bir geliştiriciyim.</p>
                 <div class="hero-btns">
                     <a href="#contact" class="btn btn-primary">İletişime Geç</a>
-                    <a href="https://github.com/oguzhanKomcu" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
-                    <a href="https://linkedin.com/in/oguzhankomcu1" target="_blank" class="btn btn-outline"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                    <a href="https://github.com/oguzhanKomcu" target="_blank" class="btn btn-outline"><i
+                            class="fab fa-github"></i> GitHub</a>
+                    <a href="https://linkedin.com/in/oguzhankomcu1" target="_blank" class="btn btn-outline"><i
+                            class="fab fa-linkedin"></i> LinkedIn</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -662,11 +826,11 @@
         </div>
     </section>
 
-<section id="skills" class="section">
+    <section id="skills" class="section">
         <div class="container">
             <h2 class="section-title">Teknik Yetkinlikler</h2>
             <div class="skills-grid">
-                
+
                 <div class="skill-card">
                     <i class="fas fa-terminal"></i>
                     <h3>Backend Core</h3>
@@ -692,106 +856,113 @@
                 </div>
 
                 <div class="skill-card">
-                    <i class="fas fa-brain" style="color: #bc13fe;"></i> <h3>AI & Automation</h3>
+                    <i class="fas fa-brain" style="color: #bc13fe;"></i>
+                    <h3>AI & Automation</h3>
                     <p>ChatGPT, Gemini, Claude, DeepSeek, Nano Banana, n8n</p>
                 </div>
 
             </div>
         </div>
     </section>
-<section id="projects" class="section">
+    <section id="projects" class="section">
         <div class="container">
             <h2 class="section-title">Projeler</h2>
             <div class="projects-grid">
-               
+
                 <div class="project-card">
                     <a href="https://odeme.tivibu.com.tr/">
-                    <div class="project-img">
-                        <img src="img/tivibugo.jpg" alt="TivibuGo Ödeme">
-                    </div>
-                    <div class="project-info">
-                        <h3>TivibuGo Ödeme Sistemleri</h3>
-                        <p>Ödeme altyapısının yüksek trafik altında stabil çalışması için backend optimizasyonları ve geliştirmeleri.</p>
-                    </div>
+                        <div class="project-img">
+                            <img src="img/tivibugo.jpg" alt="TivibuGo Ödeme">
+                        </div>
+                        <div class="project-info">
+                            <h3>TivibuGo Ödeme Sistemleri</h3>
+                            <p>Ödeme altyapısının yüksek trafik altında stabil çalışması için backend optimizasyonları
+                                ve geliştirmeleri.</p>
+                        </div>
                     </a>
                 </div>
                 <div class="project-card">
                     <a href="https://www.turktelekomguvenlik.com/">
-                    <div class="project-img">
-                        <img src="img/turktelekomguvenlik.jpg" alt="Türk Telekom Güvenlik">
-                    </div>
-                    <div class="project-info">
-                        <h3>Türk Telekom Güvenlik</h3>
-                        <p>Türk Telekom Güvenlik, müşterileri için antivirüs programlarını sunduğu bir web sitedir.</p>
-                    </div>
+                        <div class="project-img">
+                            <img src="img/turktelekomguvenlik.jpg" alt="Türk Telekom Güvenlik">
+                        </div>
+                        <div class="project-info">
+                            <h3>Türk Telekom Güvenlik</h3>
+                            <p>Türk Telekom Güvenlik, müşterileri için antivirüs programlarını sunduğu bir web sitedir.
+                            </p>
+                        </div>
                     </a>
                 </div>
                 <div class="project-card">
                     <a href="https://www.axess.com.tr/">
-                    <div class="project-img">
-                        <img src="img/axess.jpg" alt="Akbank Axess">
-                    </div>
-                    <div class="project-info">
-                        <h3>Akbank Axess</h3>
-                        <p>Akbank'ın Axess kredi kartı hakkında bilgilendirmelerin, kampayalarının sunulduğu, başvurularının yapıldığı kapsamlı bir web sitedir.</p>
-                    </div>
+                        <div class="project-img">
+                            <img src="img/axess.jpg" alt="Akbank Axess">
+                        </div>
+                        <div class="project-info">
+                            <h3>Akbank Axess</h3>
+                            <p>Akbank'ın Axess kredi kartı hakkında bilgilendirmelerin, kampayalarının sunulduğu,
+                                başvurularının yapıldığı kapsamlı bir web sitedir.</p>
+                        </div>
                     </a>
                 </div>
                 <div class="project-card">
                     <a href="https://www.osmanlimenkul.com.tr/">
-                    <div class="project-img">
-                        <img src="img/osmanlıyatırım.jpg" alt="Osmanlı Menkul">
-                    </div>
-                    <div class="project-info">
-                        <h3>Osmanlı Menkul</h3>
-                        <p>Osmanlı Menkul yatırım firmasının hizmtlerinin sunulduğu bir web sitesidir.</p>
-                    </div>
+                        <div class="project-img">
+                            <img src="img/osmanlıyatırım.jpg" alt="Osmanlı Menkul">
+                        </div>
+                        <div class="project-info">
+                            <h3>Osmanlı Menkul</h3>
+                            <p>Osmanlı Menkul yatırım firmasının hizmtlerinin sunulduğu bir web sitesidir.</p>
+                        </div>
                     </a>
                 </div>
                 <div class="project-card">
                     <a href="https://www.osmanliportfoy.com.tr/">
-                    <div class="project-img">
-                        <img src="img/osmanliportfoy.jpg" alt="Osmanlı Portföy">
-                    </div>
-                    <div class="project-info">
-                        <h3>Osmanlı Portföy</h3>
-                        <p>Osmanlı Portföy yatırım firmasının yatırım fonları hakkında bilgilerin sunulduğu, işlemlerin yapıldığı bir web sitesidir.</p>
-                    </div>
+                        <div class="project-img">
+                            <img src="img/osmanliportfoy.jpg" alt="Osmanlı Portföy">
+                        </div>
+                        <div class="project-info">
+                            <h3>Osmanlı Portföy</h3>
+                            <p>Osmanlı Portföy yatırım firmasının yatırım fonları hakkında bilgilerin sunulduğu,
+                                işlemlerin yapıldığı bir web sitesidir.</p>
+                        </div>
                     </a>
                 </div>
 
                 <div class="project-card">
                     <a href="https://www.hrthema.com/">
-                    <div class="project-img">
-                        <img src="img/hrthema.jpg" alt="HR Thema Project">
-                    </div>
-                    <div class="project-info">
-                        <h3>HR Thema HCM</h3>
-                        <p>Kurumsal firmalar için kapsamlı insan kaynakları yönetim sistemi.</p>
-                    </div>
+                        <div class="project-img">
+                            <img src="img/hrthema.jpg" alt="HR Thema Project">
+                        </div>
+                        <div class="project-info">
+                            <h3>HR Thema HCM</h3>
+                            <p>Kurumsal firmalar için kapsamlı insan kaynakları yönetim sistemi.</p>
+                        </div>
                     </a>
                 </div>
 
                 <div class="project-card">
                     <a href="https://verityprep.com/">
-                    <div class="project-img">
-                        <img src="img/verityprep.jpg" alt="Verityprep">
-                    </div>
-                    <div class="project-info">
-                        <h3>Verityprep</h3>
-                        <p>Kurumun kurs tanıtımlarının, kampanyalarının bulunduğu, öğrencilerin sınav çözüm sistemlerinin olduğu platformdur.</p>
-                    </div>
+                        <div class="project-img">
+                            <img src="img/verityprep.jpg" alt="Verityprep">
+                        </div>
+                        <div class="project-info">
+                            <h3>Verityprep</h3>
+                            <p>Kurumun kurs tanıtımlarının, kampanyalarının bulunduğu, öğrencilerin sınav çözüm
+                                sistemlerinin olduğu platformdur.</p>
+                        </div>
                     </a>
                 </div>
                 <div class="project-card">
                     <a href="https://verityprep.com/">
-                    <div class="project-img">
-                        <img src="img/veritasedu.jpg" alt="Veritasedu">
-                    </div>
-                    <div class="project-info">
-                        <h3>Veritasedu</h3>
-                        <p>Kurumun kurs tanıtımlarının, kampanyalarının, sınav bilgilendirmelerinin bulunudğu web sitesidir.</p>
-                    </div>
+                        <div class="project-img">
+                            <img src="img/veritasedu.jpg" alt="Veritasedu">
+                        </div>
+                        <div class="project-info">
+                            <h3>Veritasedu</h3>
+                            <p>Kurumun kurs tanıtımlarının, kampanyalarının, sınav bilgilendirmelerinin bulunudğu web
+                                sitesidir.</p>
+                        </div>
                     </a>
                 </div>
 
@@ -802,7 +973,7 @@
         <div class="container">
             <h2 class="section-title">İş Deneyimi</h2>
             <div class="timeline">
-                
+
                 <div class="timeline-item">
                     <div class="timeline-content">
                         <div class="timeline-header">
@@ -813,7 +984,8 @@
                             </div>
                         </div>
                         <span class="dateBox">01.2025 - 11.2025</span>
-                        <p style="margin-top:10px; color:#aaa;">Web tabanlı eğitim yönetim yazılımları geliştirme, bakım ve AI (Yapay Zeka) modelleri entegrasyonu.</p>
+                        <p style="margin-top:10px; color:#aaa;">Web tabanlı eğitim yönetim yazılımları geliştirme, bakım
+                            ve AI (Yapay Zeka) modelleri entegrasyonu.</p>
                     </div>
                 </div>
 
@@ -827,13 +999,14 @@
                             </div>
                         </div>
                         <span class="dateBox">10.2023 - 06.2024</span>
-                        <p style="margin-top:10px; color:#aaa;">HR Thema HCM projesi. Backend, frontend ve veritabanı (Redis, Docker, Azure) geliştirme süreçleri.</p>
+                        <p style="margin-top:10px; color:#aaa;">HR Thema HCM projesi. Backend, frontend ve veritabanı
+                            (Redis, Docker, Azure) geliştirme süreçleri.</p>
                     </div>
                 </div>
 
                 <div class="timeline-item">
                     <div class="timeline-content">
-                         <div class="timeline-header">
+                        <div class="timeline-header">
                             <div class="company-logo"><img src="img/dblogo.jpg" alt="DreamsBytes"></div>
                             <div class="timeline-title">
                                 <h3>Dreams&Bytes</h3>
@@ -841,13 +1014,14 @@
                             </div>
                         </div>
                         <span class="dateBox">01.2023 - 09.2023</span>
-                        <p style="margin-top:10px; color:#aaa;">TivibuGo, Türk Telekom, Akbank Axess,Osmanlı Menkul vs. projelerinin frontend ve backend yazılım geliştirmelerinin sağlanması.</p>
+                        <p style="margin-top:10px; color:#aaa;">TivibuGo, Türk Telekom, Akbank Axess,Osmanlı Menkul vs.
+                            projelerinin frontend ve backend yazılım geliştirmelerinin sağlanması.</p>
                     </div>
                 </div>
 
                 <div class="timeline-item">
                     <div class="timeline-content">
-                         <div class="timeline-header">
+                        <div class="timeline-header">
                             <div class="company-logo"><img src="img/cuhadaroglu_metal_logo.jpg" alt="Çuhadaroğlu"></div>
                             <div class="timeline-title">
                                 <h3>Çuhadaroğlu Holding</h3>
@@ -855,14 +1029,54 @@
                             </div>
                         </div>
                         <span class="dateBox">06.2022 - 12.2022</span>
-                        <p style="margin-top:10px; color:#aaa;">Ar-Ge departmanı ve şirket içi yazılım projelerinin frontend ve backend yazılım geliştirmelerinin yürütülmesi.</p>
+                        <p style="margin-top:10px; color:#aaa;">Ar-Ge departmanı ve şirket içi yazılım projelerinin
+                            frontend ve backend yazılım geliştirmelerinin yürütülmesi.</p>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <section id="personal-projects" class="section">
+        <div class="container">
+            <h2 class="section-title">Kişisel Projelerim</h2>
+            <div class="timeline">
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div class="company-logo"><img src="img/peekseek.png" alt="Peek Seek"></div>
+                            <div class="timeline-title">
+                                <h3>Peek Seek : Hafıza Oyunu</h3>
+                            </div>
+                        </div>
+                        <p style="margin-top:10px; color:#aaa;">Kart eşleştirme üzerine levelleri geçtiğin bir zeka
+                            oyunudur.</p>
+                        <a href="https://play.google.com/store/apps/details?id=com.ogikom.peekseek" target="_blank"
+                            class="dateBox"
+                            style="background: rgba(0, 243, 255, 0.1); margin-top:15px; text-decoration: none;">İncele
+                            <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div class="company-logo"><img src="img/triviaCommender.png" alt="Trivia Commander"></div>
+                            <div class="timeline-title">
+                                <h3>Trivia Commander : Türkiye</h3>
+                            </div>
+                        </div>
+                        <p style="margin-top:10px; color:#aaa;">Türkiye haritasındaki şehirleri bilgi sorularına göre
+                            doğru bilip feth ettiğin bir zeka oyunudur.</p>
+                        <a href="https://play.google.com/store/apps/details?id=com.ogikom.triviacommanderturkiye"
+                            target="_blank" class="dateBox"
+                            style="background: rgba(0, 243, 255, 0.1); margin-top:15px; text-decoration: none;">İncele
+                            <i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
 
             </div>
         </div>
     </section>
-
     <footer id="contact">
         <div class="container">
             <h2>Bağlantı Kur</h2>
@@ -885,7 +1099,7 @@
                 <a href="https://linkedin.com/in/oguzhankomcu1" target="_blank"><i class="fab fa-linkedin"></i></a>
                 <a href="https://github.com/oguzhanKomcu" target="_blank"><i class="fab fa-github"></i></a>
             </div>
-            
+
             <p class="copyright">System.Status: Online | &copy; 2025 Oğuzhan Kömcü</p>
         </div>
     </footer>
@@ -979,7 +1193,7 @@
 
                     if (distance < 100) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(0, 243, 255, ${1 - distance/100})`;
+                        ctx.strokeStyle = `rgba(0, 243, 255, ${1 - distance / 100})`;
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
                         ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
@@ -996,8 +1210,3 @@
 </body>
 
 </html>
-
-
-
-
-
