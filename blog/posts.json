@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "ef-core-10-vektorel-arama",
+    "title": "EF Core 10 ile Vektörel Arama",
+    "subtitle": "\"Laptop\" yazan kullanıcıya \"Dizüstü Bilgisayar\" ürünlerini getirmek: SQL Server 2025 vector tipi ve LINQ ile anlamsal arama.",
+    "date": "2026-11-18",
+    "coverImage": "img/blog/ef-core-10-vektorel-arama.png",
+    "tags": [".NET", "EF Core", "Yapay Zeka", "SQL Server"],
+    "content": [
+      { "type": "paragraph", "text": "Bir e-ticaret sitesinde \"laptop\" diye arama yapıldığını düşünün. Ürünler ise \"Dizüstü Bilgisayar\" adıyla listelenmiş." },
+      { "type": "paragraph", "text": "Klasik arama \"laptop\" kelimesini bulamaz ve sonuç: \"Aradığınız kriterlere uygun ürün bulunamadı.\" Oysa ikisi aynı şey. Kelimeler tutmuyor ama anlam tutuyor." },
+
+      { "type": "heading", "text": "Vektörel arama nasıl çalışıyor?" },
+      { "type": "paragraph", "text": "Yapay zeka her metne bir \"anlam koordinatı\" veriyor. Buna embedding (vektör) deniyor. Anlamca yakın metinler bu haritada yan yana düşüyor; \"laptop\" ile \"dizüstü bilgisayar\" neredeyse üst üste duruyor." },
+      { "type": "paragraph", "text": "Model bunu bir sözlükten öğrenmiyor. Milyarlarca metinde iki ifadenin hep aynı kelimelerle (batarya, RAM, ekran...) birlikte geçtiğini görüp aynı şey olduklarını kendisi çıkarıyor." },
+      { "type": "paragraph", "text": "Arama yapıldığında kullanıcının yazdığı kelime de koordinata çevriliyor ve ona en yakın ürünler getiriliyor. Yani kelimeye göre değil, anlama göre arama." },
+
+      { "type": "heading", "text": "EF Core 10 ne değiştirdi?" },
+      { "type": "paragraph", "text": "Eskiden bunun için ayrı bir vektör veritabanı kurup ana veritabanıyla senkron tutmak gerekiyordu. EF Core 10 artık SQL Server 2025 ve Azure SQL'deki yerleşik vector tipini doğrudan destekliyor." },
+      { "type": "list", "items": [
+        "Ayrı bir veritabanı yok",
+        "Yeni sorgu dili yok, her gün yazılan LINQ ile devam",
+        "OpenAI, Azure OpenAI ya da lokalde Ollama kullanılabiliyor"
+      ] },
+
+      { "type": "heading", "text": "Kod" },
+      { "type": "code", "language": "csharp", "code": "// 0️⃣ Embedding üretecek yapay zeka servisini kaydet (Program.cs)\nbuilder.Services.AddEmbeddingGenerator(\n    new OpenAIClient(builder.Configuration[\"OpenAI:ApiKey\"])\n        .GetEmbeddingClient(\"text-embedding-3-small\")\n        .AsIEmbeddingGenerator());\n\n// 1️⃣ Ürün tablosuna \"anlam\" sütunu ekle\npublic class Product\n{\n    public int Id { get; set; }\n    public string Name { get; set; } = string.Empty;\n    public string Description { get; set; } = string.Empty;\n\n    // text-embedding-3-small 1536 boyutlu vektör üretir\n    [Column(TypeName = \"vector(1536)\")]\n    public SqlVector<float> Embedding { get; set; }\n}\n\npublic class ProductService(\n    AppDbContext context,\n    IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator)\n{\n    // 2️⃣ Ürünü kaydederken adı + açıklamayı vektöre çevir\n    public async Task AddAsync(string name, string description)\n    {\n        var embedding = await embeddingGenerator.GenerateVectorAsync($\"{name} {description}\");\n\n        context.Products.Add(new Product\n        {\n            Name = name,\n            Description = description,\n            Embedding = new SqlVector<float>(embedding)\n        });\n        await context.SaveChangesAsync();\n    }\n\n    // 3️⃣ \"laptop\" araması \"Dizüstü Bilgisayar\" ürünlerini getirir\n    public async Task<List<Product>> SearchAsync(string text)\n    {\n        var query = new SqlVector<float>(\n            await embeddingGenerator.GenerateVectorAsync(text));\n\n        return await context.Products\n            .OrderBy(p => EF.Functions.VectorDistance(\"cosine\", p.Embedding, query))\n            .Take(10)\n            .ToListAsync();\n    }\n}" },
+      { "type": "quote", "text": "Mesafe ne kadar küçükse anlam o kadar yakın. Gerisi zaten tanıdık kod." },
+
+      { "type": "heading", "text": "Nerelerde işe yarar?" },
+      { "type": "list", "items": [
+        "Eş anlamlı kelimeye takılmayan e-ticaret aramaları",
+        "\"Kargom nerede?\" ile \"Siparişim gelmedi\"yi aynı soru sayan destek botları",
+        "Şirket dokümanları üzerinden cevap veren asistanlar (RAG)"
+      ] }
+    ]
+  }
+]
