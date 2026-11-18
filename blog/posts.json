@@ -1,5 +1,45 @@
 [
   {
+    "slug": "csharp-14-extension-members",
+    "title": "C# 14 ile Extension Property: Yıllardır Eksik Olan Parça",
+    "subtitle": "C# 14'ün yeni extension bloğu ile değiştiremediğiniz sınıflara property ve static üye eklemek.",
+    "date": "2026-11-19",
+    "coverImage": "img/blog/csharp-14-extension-members.png",
+    "tags": ["C#", ".NET", "C# 14"],
+    "content": [
+      { "type": "paragraph", "text": "Extension metotlar C#'ın en sevilen özelliklerinden biri. LINQ'in tamamı zaten bunun üzerine kurulu. Ama hep bir sınırı vardı: sadece metot yazılabiliyordu." },
+      { "type": "paragraph", "text": "Bir müşterinin tam adını almak için \"customer.FullName\" yazmak çok daha doğal dursa da, mecburen \"customer.GetFullName()\" yazılıyordu. Anlam olarak bir property, ama yazım olarak bir metot." },
+
+      { "type": "heading", "text": "Senaryo: değiştiremediğimiz bir sınıf" },
+      { "type": "paragraph", "text": "Extension'ların asıl kullanım amacı, kaynak koduna dokunamadığımız sınıflara dışarıdan özellik eklemek. Örneğin başka bir kütüphaneden gelen bir Customer modeli:" },
+      { "type": "code", "language": "csharp", "code": "// 📦 Başka bir kütüphaneden gelen model, kaynak koduna dokunamıyoruz\npublic class Customer\n{\n    public string FirstName { get; set; } = string.Empty;\n    public string LastName { get; set; } = string.Empty;\n    public DateTime BirthDate { get; set; }\n    public List<Order> Orders { get; set; } = [];\n}" },
+
+      { "type": "heading", "text": "Önce: her şey metot" },
+      { "type": "paragraph", "text": "Eski yöntemde her extension ayrı bir metot ve her birinde \"this Customer customer\" parametresi tekrar tekrar yazılıyor:" },
+      { "type": "code", "language": "csharp", "code": "public static class CustomerExtensions\n{\n    public static string GetFullName(this Customer customer)\n        => $\"{customer.FirstName} {customer.LastName}\";\n\n    public static bool HasOrders(this Customer customer)\n        => customer.Orders.Count > 0;\n}\n\nConsole.WriteLine(customer.GetFullName());\nif (customer.HasOrders()) { /* ... */ }" },
+
+      { "type": "heading", "text": "C# 14: extension bloğu" },
+      { "type": "paragraph", "text": "C# 14 ile gelen \"extension\" bloğunda tip başta bir kez tanımlanıyor. Bloğun içine property, metot ve static üye yazılabiliyor:" },
+      { "type": "code", "language": "csharp", "code": "public static class CustomerExtensions\n{\n    extension(Customer customer)\n    {\n        public string FullName => $\"{customer.FirstName} {customer.LastName}\";\n        public bool HasOrders => customer.Orders.Count > 0;\n\n        public int Age\n        {\n            get\n            {\n                var today = DateTime.Today;\n                var age = today.Year - customer.BirthDate.Year;\n                // Doğum günü bu yıl henüz gelmediyse bir yaş eksik\n                if (customer.BirthDate.Date > today.AddYears(-age)) age--;\n                return age;\n            }\n        }\n\n        // Static üye: sanki Customer sınıfının kendisinde varmış gibi\n        public static Customer Guest => new() { FirstName = \"Misafir\", LastName = \"Kullanıcı\" };\n    }\n}\n\nConsole.WriteLine(customer.FullName);           // sanki sınıfın kendi property'si\nif (customer.Age >= 18 && customer.HasOrders) { /* ... */ }\n\nvar guest = Customer.Guest;                     // static extension" },
+      { "type": "quote", "text": "GetFullName() artık FullName. Küçük bir fark gibi görünüyor ama kod, sınıfın kendi üyesini kullanıyormuş gibi okunuyor." },
+
+      { "type": "heading", "text": "Neler kazanılıyor?" },
+      { "type": "list", "items": [
+        "Property'ler: customer.FullName, customer.Age",
+        "Static üyeler: Customer.Guest, sanki tipin kendisinde varmış gibi",
+        "Tekrar yok: tip bloğun başında bir kez tanımlanıyor",
+        "Düzen: aynı tipe ait tüm extension'lar tek bir yerde toplanıyor"
+      ] },
+
+      { "type": "heading", "text": "Eski kodlar ne olacak?" },
+      { "type": "paragraph", "text": "Hiçbir şey. \"this\" ile yazılmış eski extension metotlar çalışmaya devam ediyor. Mevcut kodu değiştirmek zorunlu değil, istenirse yavaş yavaş yeni yapıya taşınabiliyor." },
+
+      { "type": "heading", "text": "Bilinmesi gereken tek sınır" },
+      { "type": "paragraph", "text": "Extension property'ler veri saklayamıyor. Yani bir tipe dışarıdan yeni bir alan eklenemiyor, sadece var olan veriden hesaplanan değerler yazılabiliyor: FullName, Age, HasOrders gibi." },
+      { "type": "paragraph", "text": "Bu özellik C# 14 ile geldi, kullanmak için .NET 10 SDK gerekiyor." }
+    ]
+  },
+  {
     "slug": "ef-core-10-vektorel-arama",
     "title": "EF Core 10 ile Vektörel Arama",
     "subtitle": "\"Laptop\" yazan kullanıcıya \"Dizüstü Bilgisayar\" ürünlerini getirmek: SQL Server 2025 vector tipi ve LINQ ile anlamsal arama.",
