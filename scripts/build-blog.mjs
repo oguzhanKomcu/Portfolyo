@@ -32,12 +32,6 @@ const escapeHtml = (value = '') => String(value)
 
 const absoluteUrl = (relativePath) => `${SITE_URL}/${relativePath.replace(/^\/+/, '')}`;
 
-function formatDate(isoDate) {
-    const date = new Date(`${isoDate}T00:00:00`);
-    if (isNaN(date)) return escapeHtml(isoDate);
-    return date.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-}
-
 function validatePosts(posts) {
     if (!Array.isArray(posts)) throw new Error('posts.json bir dizi olmalı: [ {...}, {...} ]');
     const slugs = new Set();
@@ -136,9 +130,10 @@ function image(src, alt, prefix, { lazy = true } = {}) {
     return `<img src="${prefix}${escapeHtml(src)}" alt="${escapeHtml(alt)}"${lazy ? ' loading="lazy"' : ''} data-fallback>`;
 }
 
+// Tarih sayfada gösterilmez; sadece sıralama, sitemap ve yapılandırılmış veri için kullanılır
 function meta(post) {
     const tags = (post.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
-    return `<div class="post-meta"><time datetime="${escapeHtml(post.date)}">${formatDate(post.date)}</time>${tags}</div>`;
+    return tags ? `<div class="post-meta">${tags}</div>` : '';
 }
 
 // ---------- içerik blokları ----------
