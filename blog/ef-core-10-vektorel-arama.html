@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <!-- Bu dosya scripts/build-blog.mjs tarafından üretilir. Elle düzenlemeyin; blog/posts.json'u değiştirin. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EF Core 10 ile Vektörel Arama | Oğuzhan Kömcü</title>
+    <meta name="description" content="&quot;Laptop&quot; yazan kullanıcıya &quot;Dizüstü Bilgisayar&quot; ürünlerini getirmek: SQL Server 2025 vector tipi ve LINQ ile anlamsal arama.">
+    <meta name="author" content="Oğuzhan Kömcü">
+    <link rel="canonical" href="https://www.ogikom.com/blog/ef-core-10-vektorel-arama.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Oğuzhan Kömcü">
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:title" content="EF Core 10 ile Vektörel Arama | Oğuzhan Kömcü">
+    <meta property="og:description" content="&quot;Laptop&quot; yazan kullanıcıya &quot;Dizüstü Bilgisayar&quot; ürünlerini getirmek: SQL Server 2025 vector tipi ve LINQ ile anlamsal arama.">
+    <meta property="og:url" content="https://www.ogikom.com/blog/ef-core-10-vektorel-arama.html">
+    <meta property="og:image" content="https://www.ogikom.com/img/oguzhanpp.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="EF Core 10 ile Vektörel Arama | Oğuzhan Kömcü">
+    <meta name="twitter:description" content="&quot;Laptop&quot; yazan kullanıcıya &quot;Dizüstü Bilgisayar&quot; ürünlerini getirmek: SQL Server 2025 vector tipi ve LINQ ile anlamsal arama.">
+    <meta name="twitter:image" content="https://www.ogikom.com/img/oguzhanpp.jpg">
+
+    <link rel="icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/blog.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"EF Core 10 ile Vektörel Arama","description":"\"Laptop\" yazan kullanıcıya \"Dizüstü Bilgisayar\" ürünlerini getirmek: SQL Server 2025 vector tipi ve LINQ ile anlamsal arama.","image":"https://www.ogikom.com/img/oguzhanpp.jpg","datePublished":"2026-11-18","dateModified":"2026-11-18","inLanguage":"tr-TR","keywords":".NET, EF Core, Yapay Zeka, SQL Server","mainEntityOfPage":"https://www.ogikom.com/blog/ef-core-10-vektorel-arama.html","author":{"@type":"Person","name":"Oğuzhan Kömcü","url":"https://www.ogikom.com"}}</script>
+</head>
+
+<body>
+    <canvas id="canvas-bg"></canvas>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">OK<span style="color:#fff">.</span></a>
+
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="../index.html#about">Hakkımda</a></li>
+                <li><a href="../index.html#projects">Projeler</a></li>
+                <li><a href="../index.html#personal-projects">Kişisel Projeler</a></li>
+                <li><a href="../blog.html" class="active">Blog</a></li>
+                <li><a href="../index.html#contact">İletişim</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <article class="post">
+                <a href="../blog.html" class="back-link">&lt; Tüm yazılar</a>
+                <header class="post-header">
+                    <div class="post-meta"><time datetime="2026-11-18">18 Kasım 2026</time><span class="tag">.NET</span><span class="tag">EF Core</span><span class="tag">Yapay Zeka</span><span class="tag">SQL Server</span></div>
+                    <h1>EF Core 10 ile Vektörel Arama</h1>
+                    <p class="post-subtitle">&quot;Laptop&quot; yazan kullanıcıya &quot;Dizüstü Bilgisayar&quot; ürünlerini getirmek: SQL Server 2025 vector tipi ve LINQ ile anlamsal arama.</p>
+                </header>
+                <div class="post-cover"><img src="../img/blog/ef-core-10-vektorel-arama.png" alt="EF Core 10 ile Vektörel Arama" data-fallback></div>
+                <div class="post-content">
+                    <p>Bir e-ticaret sitesinde &quot;laptop&quot; diye arama yapıldığını düşünün. Ürünler ise &quot;Dizüstü Bilgisayar&quot; adıyla listelenmiş.</p>
+                    <p>Klasik arama &quot;laptop&quot; kelimesini bulamaz ve sonuç: &quot;Aradığınız kriterlere uygun ürün bulunamadı.&quot; Oysa ikisi aynı şey. Kelimeler tutmuyor ama anlam tutuyor.</p>
+                    <h2>Vektörel arama nasıl çalışıyor?</h2>
+                    <p>Yapay zeka her metne bir &quot;anlam koordinatı&quot; veriyor. Buna embedding (vektör) deniyor. Anlamca yakın metinler bu haritada yan yana düşüyor; &quot;laptop&quot; ile &quot;dizüstü bilgisayar&quot; neredeyse üst üste duruyor.</p>
+                    <p>Model bunu bir sözlükten öğrenmiyor. Milyarlarca metinde iki ifadenin hep aynı kelimelerle (batarya, RAM, ekran...) birlikte geçtiğini görüp aynı şey olduklarını kendisi çıkarıyor.</p>
+                    <p>Arama yapıldığında kullanıcının yazdığı kelime de koordinata çevriliyor ve ona en yakın ürünler getiriliyor. Yani kelimeye göre değil, anlama göre arama.</p>
+                    <h2>EF Core 10 ne değiştirdi?</h2>
+                    <p>Eskiden bunun için ayrı bir vektör veritabanı kurup ana veritabanıyla senkron tutmak gerekiyordu. EF Core 10 artık SQL Server 2025 ve Azure SQL&#39;deki yerleşik vector tipini doğrudan destekliyor.</p>
+                    <ul><li>Ayrı bir veritabanı yok</li><li>Yeni sorgu dili yok, her gün yazılan LINQ ile devam</li><li>OpenAI, Azure OpenAI ya da lokalde Ollama kullanılabiliyor</li></ul>
+                    <h2>Kod</h2>
+                    <div class="code-block"><pre><code class="language-csharp">// 0️⃣ Embedding üretecek yapay zeka servisini kaydet (Program.cs)
+builder.Services.AddEmbeddingGenerator(
+    new OpenAIClient(builder.Configuration[&quot;OpenAI:ApiKey&quot;])
+        .GetEmbeddingClient(&quot;text-embedding-3-small&quot;)
+        .AsIEmbeddingGenerator());
+
+// 1️⃣ Ürün tablosuna &quot;anlam&quot; sütunu ekle
+public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+
+    // text-embedding-3-small 1536 boyutlu vektör üretir
+    [Column(TypeName = &quot;vector(1536)&quot;)]
+    public SqlVector&lt;float&gt; Embedding { get; set; }
+}
+
+public class ProductService(
+    AppDbContext context,
+    IEmbeddingGenerator&lt;string, Embedding&lt;float&gt;&gt; embeddingGenerator)
+{
+    // 2️⃣ Ürünü kaydederken adı + açıklamayı vektöre çevir
+    public async Task AddAsync(string name, string description)
+    {
+        var embedding = await embeddingGenerator.GenerateVectorAsync($&quot;{name} {description}&quot;);
+
+        context.Products.Add(new Product
+        {
+            Name = name,
+            Description = description,
+            Embedding = new SqlVector&lt;float&gt;(embedding)
+        });
+        await context.SaveChangesAsync();
+    }
+
+    // 3️⃣ &quot;laptop&quot; araması &quot;Dizüstü Bilgisayar&quot; ürünlerini getirir
+    public async Task&lt;List&lt;Product&gt;&gt; SearchAsync(string text)
+    {
+        var query = new SqlVector&lt;float&gt;(
+            await embeddingGenerator.GenerateVectorAsync(text));
+
+        return await context.Products
+            .OrderBy(p =&gt; EF.Functions.VectorDistance(&quot;cosine&quot;, p.Embedding, query))
+            .Take(10)
+            .ToListAsync();
+    }
+}</code></pre><button type="button" class="copy-btn">Kopyala</button></div>
+                    <blockquote>Mesafe ne kadar küçükse anlam o kadar yakın. Gerisi zaten tanıdık kod.</blockquote>
+                    <h2>Nerelerde işe yarar?</h2>
+                    <ul><li>Eş anlamlı kelimeye takılmayan e-ticaret aramaları</li><li>&quot;Kargom nerede?&quot; ile &quot;Siparişim gelmedi&quot;yi aynı soru sayan destek botları</li><li>Şirket dokümanları üzerinden cevap veren asistanlar (RAG)</li></ul>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <p class="copyright">System.Status: Online | &copy; 2026 Oğuzhan Kömcü</p>
+    </footer>
+
+    <script src="../js/blog.js"></script>
+</body>
+
+</html>
