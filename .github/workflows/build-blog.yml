@@ -1,0 +1,44 @@
+# posts.json değiştiğinde blog sayfalarını yeniden üretir ve main'e commit eder.
+# Render bu commit'i görünce siteyi otomatik yayınlar.
+name: Blog sayfalarını üret
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'blog/posts.json'
+      - 'scripts/build-blog.mjs'
+      - 'img/blog/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-blog
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Sayfaları üret
+        run: node scripts/build-blog.mjs
+
+      - name: Değişiklik varsa commit et
+        run: |
+          git add -A blog.html blog/ sitemap.xml robots.txt
+          if git diff --cached --quiet; then
+            echo "Üretilen dosyalarda değişiklik yok."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Blog sayfaları yeniden üretildi"
+          git push

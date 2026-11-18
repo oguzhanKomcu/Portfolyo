@@ -2,16 +2,33 @@
 <html lang="tr">
 
 <head>
+    <!-- Bu dosya scripts/build-blog.mjs tarafından üretilir. Elle düzenlemeyin; blog/posts.json'u değiştirin. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog | Oğuzhan Kömcü</title>
-    <meta name="description" content="Oğuzhan Kömcü'nün .NET, C#, yazılım ve yapay zeka üzerine yazıları.">
+    <meta name="description" content="Oğuzhan Kömcü&#39;nün .NET, C#, yazılım ve yapay zeka üzerine yazıları.">
+    <meta name="author" content="Oğuzhan Kömcü">
+    <link rel="canonical" href="https://www.ogikom.com/blog.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Oğuzhan Kömcü">
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:title" content="Blog | Oğuzhan Kömcü">
+    <meta property="og:description" content="Oğuzhan Kömcü&#39;nün .NET, C#, yazılım ve yapay zeka üzerine yazıları.">
+    <meta property="og:url" content="https://www.ogikom.com/blog.html">
+    <meta property="og:image" content="https://www.ogikom.com/img/oguzhanpp.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Blog | Oğuzhan Kömcü">
+    <meta name="twitter:description" content="Oğuzhan Kömcü&#39;nün .NET, C#, yazılım ve yapay zeka üzerine yazıları.">
+    <meta name="twitter:image" content="https://www.ogikom.com/img/oguzhanpp.jpg">
+
     <link rel="icon" href="img/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/blog.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"Blog | Oğuzhan Kömcü","description":"Oğuzhan Kömcü'nün .NET, C#, yazılım ve yapay zeka üzerine yazıları.","url":"https://www.ogikom.com/blog.html","inLanguage":"tr-TR","author":{"@type":"Person","name":"Oğuzhan Kömcü","url":"https://www.ogikom.com"},"blogPost":[{"@type":"BlogPosting","headline":"EF Core 10 ile Vektörel Arama","url":"https://www.ogikom.com/blog/ef-core-10-vektorel-arama.html","datePublished":"2026-11-18"}]}</script>
 </head>
 
 <body>
@@ -40,20 +57,25 @@
             <h1 class="page-title">Blog</h1>
             <p class="page-subtitle">// .NET, yazılım ve yapay zeka üzerine notlar</p>
 
-            <div id="blog-list">
-                <p class="status-message">Yükleniyor...</p>
+            <div class="blog-grid">
+                <a class="blog-card" href="blog/ef-core-10-vektorel-arama.html">
+                    <div class="blog-card-img"><img src="img/blog/ef-core-10-vektorel-arama.png" alt="EF Core 10 ile Vektörel Arama" loading="lazy" data-fallback></div>
+                    <div class="blog-card-body">
+                        <div class="post-meta"><time datetime="2026-11-18">18 Kasım 2026</time><span class="tag">.NET</span><span class="tag">EF Core</span><span class="tag">Yapay Zeka</span><span class="tag">SQL Server</span></div>
+                        <h2>EF Core 10 ile Vektörel Arama</h2>
+                        <p>&quot;Laptop&quot; yazan kullanıcıya &quot;Dizüstü Bilgisayar&quot; ürünlerini getirmek: SQL Server 2025 vector tipi ve LINQ ile anlamsal arama.</p>
+                        <span class="read-more">Devamını oku →</span>
+                    </div>
+                </a>
             </div>
         </div>
     </main>
 
     <footer>
-        <p class="copyright">System.Status: Online | &copy; 2025 Oğuzhan Kömcü</p>
+        <p class="copyright">System.Status: Online | &copy; 2026 Oğuzhan Kömcü</p>
     </footer>
 
     <script src="js/blog.js"></script>
-    <script>
-        renderBlogList(document.getElementById('blog-list'));
-    </script>
 </body>
 
 </html>

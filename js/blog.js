@@ -1,190 +1,42 @@
-// Blog sayfalarının ortak kodu: veriyi blog/posts.json'dan okur, liste ve detay sayfasını çizer.
-// İçerik her zaman textContent ile basılır; JSON'a yazılan HTML etiketleri çalışmaz, düz metin görünür.
+// Blog sayfalarının ortak davranışları. İçerik artık HTML'de hazır geliyor
+// (scripts/build-blog.mjs üretir); bu dosya sadece etkileşimleri ekler.
 
-const POSTS_URL = 'blog/posts.json';
-
-async function loadPosts() {
-    const response = await fetch(POSTS_URL, { cache: 'no-cache' });
-    if (!response.ok) throw new Error(`posts.json okunamadı (${response.status})`);
-    const posts = await response.json();
-    // En yeni yazı en üstte
-    return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-}
-
-// Sayfa dosyaya çift tıklanarak (file://) açıldıysa tarayıcı JSON okumayı engeller
-function loadErrorMessage(defaultText) {
-    return location.protocol === 'file:'
-        ? 'Sayfa dosya olarak açıldığı için yazılar okunamadı. Bir sunucu üzerinden açın (ör. VS Code Live Server). Yayındaki sitede sorun olmaz.'
-        : defaultText;
-}
-
-function el(tag, className, text) {
-    const node = document.createElement(tag);
-    if (className) node.className = className;
-    if (text !== undefined) node.textContent = text;
-    return node;
-}
-
-function formatDate(isoDate) {
-    const date = new Date(isoDate);
-    if (isNaN(date)) return isoDate || '';
-    return date.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-}
-
-// Kapak resmi; dosya yoksa veya yüklenemezse temaya uygun bir alan gösterir
-function createImage(src, alt) {
-    const placeholder = () => {
-        const box = el('div', 'img-placeholder');
-        box.appendChild(el('i', 'fas fa-code'));
-        return box;
+// ---------- RESİM YEDEĞİ: kapak resmi yoksa temaya uygun alan göster ----------
+function initImageFallbacks() {
+    const toPlaceholder = img => {
+        const box = document.createElement('div');
+        box.className = 'img-placeholder';
+        box.innerHTML = '<i class="fas fa-code"></i>';
+        // Detay sayfasında kapak yoksa boş kutu göstermek yerine tamamen kaldır
+        const cover = img.closest('.post-cover');
+        if (cover) cover.remove();
+        else img.replaceWith(box);
     };
-    if (!src) return placeholder();
 
-    const img = el('img');
-    img.src = src;
-    img.alt = alt || '';
-    img.loading = 'lazy';
-    img.addEventListener('error', () => img.replaceWith(placeholder()));
-    return img;
+    document.querySelectorAll('img[data-fallback]').forEach(img => {
+        // Script çalışmadan önce hata vermiş olabilir
+        if (img.complete && img.naturalWidth === 0) toPlaceholder(img);
+        else img.addEventListener('error', () => toPlaceholder(img));
+    });
 }
 
-function createMeta(post) {
-    const meta = el('div', 'post-meta');
-    meta.appendChild(el('span', null, formatDate(post.date)));
-    (post.tags || []).forEach(tag => meta.appendChild(el('span', 'tag', tag)));
-    return meta;
-}
+// ---------- KOD KOPYALAMA ----------
+function initCopyButtons() {
+    document.querySelectorAll('.code-block').forEach(block => {
+        const button = block.querySelector('.copy-btn');
+        const code = block.querySelector('pre');
+        if (!button || !code) return;
 
-function postUrl(post) {
-    return `blog-post.html?slug=${encodeURIComponent(post.slug)}`;
-}
-
-// ---------- LİSTE SAYFASI ----------
-async function renderBlogList(container) {
-    try {
-        const posts = await loadPosts();
-        container.textContent = '';
-
-        if (posts.length === 0) {
-            container.appendChild(el('p', 'status-message', 'Henüz yazı yok.'));
-            return;
-        }
-
-        const grid = el('div', 'blog-grid');
-        posts.forEach(post => {
-            const card = el('a', 'blog-card');
-            card.href = postUrl(post);
-
-            const imgBox = el('div', 'blog-card-img');
-            imgBox.appendChild(createImage(post.coverImage, post.title));
-            card.appendChild(imgBox);
-
-            const body = el('div', 'blog-card-body');
-            body.appendChild(createMeta(post));
-            body.appendChild(el('h2', null, post.title));
-            body.appendChild(el('p', null, post.subtitle || ''));
-            body.appendChild(el('span', 'read-more', 'Devamını oku →'));
-            card.appendChild(body);
-
-            grid.appendChild(card);
+        button.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(code.textContent);
+                button.textContent = 'Kopyalandı ✓';
+            } catch {
+                button.textContent = 'Kopyalanamadı';
+            }
+            setTimeout(() => (button.textContent = 'Kopyala'), 2000);
         });
-        container.appendChild(grid);
-    } catch (err) {
-        console.error(err);
-        container.textContent = '';
-        container.appendChild(el('p', 'status-message', loadErrorMessage('Yazılar yüklenemedi.')));
-    }
-}
-
-// ---------- DETAY SAYFASI ----------
-function renderBlock(block) {
-    switch (block.type) {
-        case 'heading':
-            return el('h2', null, block.text);
-
-        case 'list': {
-            const ul = el('ul');
-            (block.items || []).forEach(item => ul.appendChild(el('li', null, item)));
-            return ul;
-        }
-
-        case 'quote':
-            return el('blockquote', null, block.text);
-
-        case 'image': {
-            const figure = el('figure');
-            figure.appendChild(createImage(block.src, block.alt || block.caption));
-            if (block.caption) figure.appendChild(el('figcaption', null, block.caption));
-            return figure;
-        }
-
-        case 'code': {
-            const wrapper = el('div', 'code-block');
-            const pre = el('pre');
-            pre.appendChild(el('code', block.language ? `language-${block.language}` : null, block.code));
-
-            const copyBtn = el('button', 'copy-btn', 'Kopyala');
-            copyBtn.type = 'button';
-            copyBtn.addEventListener('click', async () => {
-                try {
-                    await navigator.clipboard.writeText(block.code);
-                    copyBtn.textContent = 'Kopyalandı ✓';
-                } catch {
-                    copyBtn.textContent = 'Kopyalanamadı';
-                }
-                setTimeout(() => (copyBtn.textContent = 'Kopyala'), 2000);
-            });
-
-            wrapper.append(pre, copyBtn);
-            return wrapper;
-        }
-
-        case 'paragraph':
-        default:
-            return el('p', null, block.text);
-    }
-}
-
-async function renderBlogPost(container) {
-    const slug = new URLSearchParams(location.search).get('slug');
-
-    try {
-        const posts = await loadPosts();
-        const post = posts.find(p => p.slug === slug);
-        container.textContent = '';
-
-        if (!post) {
-            container.appendChild(el('p', 'status-message', 'Aradığınız yazı bulunamadı.'));
-            return;
-        }
-
-        document.title = `${post.title} | Oğuzhan Kömcü`;
-        const description = document.querySelector('meta[name="description"]');
-        if (description && post.subtitle) description.content = post.subtitle;
-
-        const header = el('header', 'post-header');
-        header.appendChild(createMeta(post));
-        header.appendChild(el('h1', null, post.title));
-        if (post.subtitle) header.appendChild(el('p', 'post-subtitle', post.subtitle));
-        container.appendChild(header);
-
-        if (post.coverImage) {
-            const cover = el('div', 'post-cover');
-            const img = createImage(post.coverImage, post.title);
-            // Detayda kapak yoksa boş alan göstermek yerine tamamen gizle
-            img.addEventListener('error', () => cover.remove());
-            cover.appendChild(img);
-            container.appendChild(cover);
-        }
-
-        const content = el('div', 'post-content');
-        (post.content || []).forEach(block => content.appendChild(renderBlock(block)));
-        container.appendChild(content);
-    } catch (err) {
-        console.error(err);
-        container.textContent = '';
-        container.appendChild(el('p', 'status-message', loadErrorMessage('Yazı yüklenemedi.')));
-    }
+    });
 }
 
 // ---------- MOBİL MENÜ ----------
@@ -257,7 +109,7 @@ function initParticles() {
     animate();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initMenu();
-    initParticles();
-});
+initImageFallbacks();
+initCopyButtons();
+initMenu();
+initParticles();
